@@ -1,4 +1,4 @@
-#### TaskTracker
+## TaskTracker
 
 Sistema web para organização e gerenciamento de tarefas de uma equipe.
 
