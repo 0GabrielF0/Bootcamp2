@@ -25,8 +25,6 @@ Aplicação CLI desenvolvida em Python para cadastro e visualização de tarefas
 tasktracker-projeto/
 ├── README.md
 ├── .gitignore
-├── docs/
-│   └── planejamento_logico.pdf
 └── src/
     └── main.py
 ```
