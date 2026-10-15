@@ -1,42 +1,65 @@
-## TaskTracker
 
-Sistema web para organização e gerenciamento de tarefas de uma equipe.
+# TaskTracker
 
-## Sobre o projeto
-
-O TaskTracker foi desenvolvido para facilitar o controle das atividades de uma equipe, centralizando tarefas, responsáveis, prioridades, prazos e status em um único sistema.
+Aplicação CLI desenvolvida em Python para cadastro e visualização de tarefas de uma equipe.
 
 ## Funcionalidades
 
-- Cadastro de tarefas
-- Edição e exclusão
-- Definição de responsáveis
-- Prioridades: Alta, Média e Baixa
-- Controle de status
-- Controle de prazos
-- Visualização de tarefas pendentes, em andamento, concluídas e atrasadas
-- Dashboard com informações das tarefas
+- Cadastro de tarefas com título, descrição, prioridade e data limite.
+- Validação de título obrigatório.
+- Validação de prioridades: Alta, Média e Baixa.
+- Definição automática do status como Pendente.
+- Listagem das tarefas cadastradas.
+- Tratamento de opções inválidas no menu.
 
 ## Tecnologias
 
-- Python
-- Flask
-- HTML
-- CSS
-- JavaScript
-- SQLite
-- Git e GitHub
+- Python 3
+- Git
+- GitHub
+- Visual Studio Code
 
-## 📁 Estrutura
+## Estrutura do projeto
 
 ```text
-TaskTracker/
-├── docs/          # Documentação e planejamento
-├── src/           # Código da aplicação
-├── templates/     # Páginas HTML
-├── static/        # CSS, JavaScript e imagens
-├── database/      # Banco de dados
-├── tests/         # Testes
+tasktracker-projeto/
 ├── README.md
-├── requirements.txt
-└── .gitignore
+├── .gitignore
+├── docs/
+│   └── planejamento_logico.pdf
+└── src/
+    └── main.py
+```
+
+## Requisitos
+
+- Python 3 instalado.
+- Git instalado para versionamento.
+
+## Como executar
+
+1. Clone o repositório ou abra a pasta do projeto.
+2. Abra o terminal na raiz do projeto.
+3. Execute:
+
+```bash
+python src/main.py
+```
+
+No Windows, caso necessário, utilize:
+
+```bash
+py src/main.py
+```
+
+## Armazenamento
+
+Nesta versão, as tarefas ficam armazenadas em memória
+durante a execução. Ao encerrar o programa, os registros
+são perdidos.
+
+## Objetivo acadêmico
+
+Aplicar conceitos de programação em Python, estruturas
+de dados, funções, validação de entradas e versionamento
+colaborativo com Git e GitHub.
