@@ -1,20 +1,42 @@
 
+import unicodedata
+from datetime import datetime
+
 tarefas = []
 
 
-def ler_titulo():
-    """Solicita um título obrigatório e não vazio."""
+def limpar_entrada(valor):
+    """Remove espaços e caracteres de controle ou invisíveis."""
+    return "".join(
+        caractere
+        for caractere in valor
+        if unicodedata.category(caractere) not in ("Cf", "Cc", "Cs")
+    ).strip()
+
+
+def ler_campo(mensagem):
+    """Impede campos vazios."""
     while True:
-        titulo = input("Título: ").strip()
+        valor = limpar_entrada(input(mensagem))
 
-        if titulo:
-            return titulo
+        if valor:
+            return valor
 
-        print("Erro: o título não pode ficar vazio. Tente novamente.")
+        print("Erro: este campo não pode ficar vazio. Tente novamente.")
+
+
+def ler_titulo():
+    """Solicita um título obrigatório."""
+    return ler_campo("Título: ")
+
+
+def ler_descricao():
+    """Solicita uma descrição obrigatória."""
+    return ler_campo("Descrição: ")
 
 
 def ler_prioridade():
-    """Aceita somente Alta, Média ou Baixa."""
+    """Aceita Alta, Média ou Baixa."""
     prioridades = {
         "alta": "Alta",
         "média": "Média",
@@ -23,33 +45,45 @@ def ler_prioridade():
     }
 
     while True:
-        prioridade = input(
+        prioridade = ler_campo(
             "Prioridade (Alta/Média/Baixa): "
-        ).strip().casefold()
+        ).casefold()
 
         if prioridade in prioridades:
             return prioridades[prioridade]
 
-        print(
-            "Erro: prioridade inválida. "
-            "Digite Alta, Média ou Baixa."
-        )
+        print("Erro: digite Alta, Média ou Baixa.")
+
+
+def ler_data_limite():
+    """Valida uma data real no formato DD/MM/AAAA."""
+    while True:
+        data = ler_campo("Data limite (DD/MM/AAAA): ")
+
+        try:
+            data_validada = datetime.strptime(data, "%d/%m/%Y")
+
+            if data_validada.strftime("%d/%m/%Y") == data:
+                return data
+
+            print("Erro: use exatamente o formato DD/MM/AAAA.")
+
+        except ValueError:
+            print(
+                "Erro: data inválida. Exemplo de formato correto: "
+                "25/12/2026."
+            )
 
 
 def cadastrar_tarefa():
-    """Recebe os dados e cadastra uma nova tarefa."""
+    """Recebe, valida e cadastra uma tarefa."""
     print("\n--- CADASTRAR NOVA TAREFA ---")
 
-    titulo = ler_titulo()
-    descricao = input("Descrição: ").strip()
-    prioridade = ler_prioridade()
-    data_limite = input("Data limite (DD/MM/AAAA): ").strip()
-
     tarefa = {
-        "titulo": titulo,
-        "descricao": descricao,
-        "prioridade": prioridade,
-        "data_limite": data_limite,
+        "titulo": ler_titulo(),
+        "descricao": ler_descricao(),
+        "prioridade": ler_prioridade(),
+        "data_limite": ler_data_limite(),
         "status": "Pendente"
     }
 
@@ -70,9 +104,9 @@ def visualizar_tarefas():
     for indice, tarefa in enumerate(tarefas, start=1):
         print(f"\nTarefa {indice}")
         print(f"Título: {tarefa['titulo']}")
-        print(f"Descrição: {tarefa['descricao'] or 'Não informada'}")
+        print(f"Descrição: {tarefa['descricao']}")
         print(f"Prioridade: {tarefa['prioridade']}")
-        print(f"Data limite: {tarefa['data_limite'] or 'Não informada'}")
+        print(f"Data limite: {tarefa['data_limite']}")
         print(f"Status: {tarefa['status']}")
 
 
@@ -87,10 +121,10 @@ def exibir_menu():
 
 
 def main():
-    """Controla o menu e a navegação da aplicação."""
+    """Controla o menu e a navegação."""
     while True:
         exibir_menu()
-        opcao = input("\nEscolha uma opção: ").strip()
+        opcao = ler_campo("Escolha uma opção: ")
 
         if opcao == "1":
             cadastrar_tarefa()
@@ -100,7 +134,7 @@ def main():
             print("\nEncerrando o TaskTracker. Até mais!")
             break
         else:
-            print("\nOpção inválida. Escolha 1, 2 ou 3.")
+            print("Opção inválida. Escolha 1, 2 ou 3.")
 
 
 if __name__ == "__main__":
